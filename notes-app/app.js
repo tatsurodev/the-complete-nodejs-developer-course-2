@@ -3,8 +3,13 @@ const chalk = require('chalk')
 // 自作moduleはrelative pathでimpport
 const getNotes = require('./notes.js')
 
-const msg = getNotes()
-console.log(msg)
+// process.argvでcommand line引数にaccessできる、argvはargument vectorの略
+// 0: node path, 1: file path, 2-: arguments
+console.log(process.argv)
+const command = process.argv[2]
 
-const greenMsg = chalk.blue.inverse.bold('Success!')
-console.log(greenMsg)
+if (command == 'add') {
+  console.log('Adding note!')
+} else if (command == 'remove') {
+  console.log('Removing note!')
+}
