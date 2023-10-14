@@ -1,6 +1,4 @@
-// core moduleの使用
-// require(moduleName)でCommonJS形式による読み込みが可能
-const fs = require('fs')
-
-// fs.writeFileSync('notes.txt', 'My name is Andrew.')
-fs.appendFileSync('notes.txt', ' I live in Philadelphia.')
+// 自作moduleはrelative pathでimpport
+const getNotes = require('./notes.js')
+const msg = getNotes()
+console.log(msg)
