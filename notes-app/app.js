@@ -10,7 +10,7 @@ const getNotes = require('./notes.js')
 
 // yargsでcommandをparse
 // node app.js add --title="This is title"
-console.log(yargs.argv) // { _: [ 'add' ], title: 'this is title', '$0': 'app.js' }
+// console.log(yargs.argv) // { _: [ 'add' ], title: 'this is title', '$0': 'app.js' }
 
 // customize yargs version
 yargs.version('1.1.0')
@@ -21,9 +21,24 @@ yargs.command({
   command: 'add',
   // helpで表示するdescription
   describe: 'Add a new note',
+  // parameterをbuilderで指定
+  builder: {
+    title: {
+      describe: 'Note title',
+      // require or not
+      demandOption: true,
+      type: 'string',
+    },
+    body: {
+      describe: 'Note body',
+      demandOption: true,
+      type: 'string',
+    },
+  },
   // commandの処理
-  handler: function () {
-    console.log('Adding a new note!')
+  handler: function (argv) {
+    console.log('Title: ' + argv.title)
+    console.log('Body: ' + argv.body)
   },
 })
 
@@ -31,8 +46,8 @@ yargs.command({
 yargs.command({
   command: 'remove',
   describe: 'Remove a note',
-  handler: function () {
-    console.log('Removing the note')
+  handler: function (argv) {
+    console.log('Removing the note', argv)
   },
 })
 
@@ -53,3 +68,6 @@ yargs.command({
     console.log('Reading the note')
   },
 })
+
+// 最後にparseさせないとcommandが使えないので注意
+yargs.parse()
