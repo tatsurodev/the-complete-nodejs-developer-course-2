@@ -2,7 +2,7 @@
 const chalk = require('chalk')
 const yargs = require('yargs')
 // 自作moduleはrelative pathでimpport
-const getNotes = require('./notes.js')
+const notes = require('./notes.js')
 
 // process.argvでcommand line引数にaccessできる、argvはargument vectorの略
 // 0: node path, 1: file path, 2-: arguments
@@ -37,8 +37,7 @@ yargs.command({
   },
   // commandの処理
   handler: function (argv) {
-    console.log('Title: ' + argv.title)
-    console.log('Body: ' + argv.body)
+    notes.addNote(argv.title, argv.body)
   },
 })
 
