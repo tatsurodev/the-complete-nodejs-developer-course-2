@@ -1,16 +1,14 @@
 const fs = require('fs')
 const chalk = require('chalk')
 
-const getNotes = () => {
-  return 'Your notes...'
-}
-
 const addNote = (title, body) => {
   const notes = loadNotes()
   // 重複するtitleのnoteをfilter
-  const duplicateNotes = notes.filter((note) => note.title === title)
+  // const duplicateNotes = notes.filter((note) => note.title === title)
+  // 重複を全てfilterするより、findで最初に見つかったものをreturnする方が速い、findは該当がなければundefined
+  const duplicateNote = notes.find((note) => note.title === title)
   // 重複するnoteがない時は新しいnoteを追加
-  if (duplicateNotes.length === 0) {
+  if (!duplicateNote) {
     notes.push({ title, body })
     saveNotes(notes)
     console.log(chalk.green.inverse('New note added!'))
@@ -41,6 +39,17 @@ const listNotes = () => {
   })
 }
 
+const readNote = (title) => {
+  const notes = loadNotes()
+  const note = notes.find((note) => note.title === title)
+  if (note) {
+    console.log(chalk.inverse(note.title))
+    console.log(note.body)
+  } else {
+    console.log(chalk.red.inverse('Note not found!'))
+  }
+}
+
 const saveNotes = (notes) => {
   const dataJSON = JSON.stringify(notes)
   fs.writeFileSync('notes.json', dataJSON)
@@ -59,8 +68,8 @@ const loadNotes = () => {
 
 // 複数exportする時はobjectで
 module.exports = {
-  getNotes,
   addNote,
   removeNote,
   listNotes,
+  readNote,
 }
