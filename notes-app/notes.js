@@ -1,16 +1,14 @@
 const fs = require('fs')
 const chalk = require('chalk')
 
-const getNotes = function () {
+const getNotes = () => {
   return 'Your notes...'
 }
 
-const addNote = function (title, body) {
+const addNote = (title, body) => {
   const notes = loadNotes()
   // 重複するtitleのnoteをfilter
-  const duplicateNotes = notes.filter(function (note) {
-    return note.title === title
-  })
+  const duplicateNotes = notes.filter((note) => note.title === title)
   // 重複するnoteがない時は新しいnoteを追加
   if (duplicateNotes.length === 0) {
     notes.push({ title, body })
@@ -22,11 +20,9 @@ const addNote = function (title, body) {
   }
 }
 
-const removeNote = function (title) {
+const removeNote = (title) => {
   const notes = loadNotes()
-  const notesToKeep = notes.filter(function (note) {
-    return note.title !== title
-  })
+  const notesToKeep = notes.filter((note) => note.title !== title)
   // 同titleありで削除時の処理
   if (notes.length > notesToKeep.length) {
     console.log(chalk.green.inverse('Note removed!'))
@@ -37,12 +33,12 @@ const removeNote = function (title) {
   }
 }
 
-const saveNotes = function (notes) {
+const saveNotes = (notes) => {
   const dataJSON = JSON.stringify(notes)
   fs.writeFileSync('notes.json', dataJSON)
 }
 
-const loadNotes = function () {
+const loadNotes = () => {
   // notes.jsonがなかったり、json formatでなかった場合、空のarrayを返す
   try {
     const dataBuffer = fs.readFileSync('notes.json')
