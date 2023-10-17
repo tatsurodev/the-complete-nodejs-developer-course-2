@@ -8,6 +8,8 @@ const addNote = (title, body) => {
   // 重複を全てfilterするより、findで最初に見つかったものをreturnする方が速い、findは該当がなければundefined
   const duplicateNote = notes.find((note) => note.title === title)
   // 重複するnoteがない時は新しいnoteを追加
+  // DevToolsでdebugしたい箇所に使用
+  // debugger
   if (!duplicateNote) {
     notes.push({ title, body })
     saveNotes(notes)
