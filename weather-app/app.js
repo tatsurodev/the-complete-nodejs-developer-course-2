@@ -1,17 +1,11 @@
-console.log('Starting')
+const dotenv = require('dotenv')
 
-setTimeout(() => {
-  console.log('2 Second Timer')
-}, 2000)
+// 開発環境(development or production)によって.envを使い分け
+// NODE_ENV=development node app.js
+// NODE_ENV=production node app.js
+dotenv.config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
 
-setTimeout(() => {
-  console.log('0 Second Timer')
-}, 0)
-
-console.log('Stopping')
-
-// result
-// Starting
-// Stopping
-// 0 Second Timer
-// 2 Second Timer
+// .envを値を使用するには、process.env.KEY
+// console.log(process.env.TEST)
